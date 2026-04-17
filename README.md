@@ -23,7 +23,9 @@ I’m using this repo as:
 - `exercises/`  
   - Contains one file per exercise (e.g., `e001.rs`, `e002.rs`, …, `e100.rs`).  
 - `mini_projects/`  
-  - Small CLI apps built while learning Rust (e.g., `word_counter`, `todo_cli`).  
+  - Small CLI apps built while learning Rust (e.g., `word_counter`, `todo_cli`).
+- `Projects/`
+   - Intermediate projects 
 - `docs/`  
   - Learning notes and plan (`learning_plan.md`).
 
