@@ -1,4 +1,4 @@
-# Shriya-100-exercises-to-learn-Rust
+# Shriya-100-exercises-to-learn-Rust-Solution
 
 A structured repository of my solutions to the **100 Exercises to Learn Rust** course (`rust-exercises.com/100-exercises`), plus small projects built while learning Rust and Solana development.
 
