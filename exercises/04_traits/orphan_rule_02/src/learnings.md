@@ -48,16 +48,3 @@ By forbidding `impl ForeignTrait for ForeignType`, Rust forces the author of *ei
 
 ---
 
-## 4. The Classic Forbidden Example
-
-Let's look at the most common beginner mistake:
-
-```rust
-use std::fmt::Display;
-
-// ERROR: Both Display (trait) and Vec (type) come from the standard library (foreign)!
-impl Display for Vec<String> {
-    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?}", self)
-    }
-}
