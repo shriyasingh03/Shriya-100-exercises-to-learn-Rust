@@ -59,7 +59,7 @@ fn main() {
 }
 
 ## Key Observations:
-
+---
 Add takes ownership of self and other (they are moved). This is fine for small structs, but not ideal for large ones.
 
 You can also implement Add<&Point> for Point to borrow instead.
@@ -120,8 +120,9 @@ Fix: Use && to combine all three comparisons.
 
 ## 5. The Correct Implementation
 After fixing all the mistakes, here is the final, polished code:
+---
 
-rust
+```rust
 use std::cmp::PartialEq;
 
 struct Ticket {
@@ -141,18 +142,22 @@ impl PartialEq for Ticket {
             && self.status == other.status
     }
 }
+
+---
 ## 6. Deep Dive: Why &self and &Self?
 This is the most important part of the eq method signature.
 
-The Golden Rule of eq
+### The Golden Rule of eq
 Comparing two things should not change or destroy them. Therefore, both sides must be borrowed.
 
 &self: Borrow the current ticket (read-only). If we took self (without &), the ticket would be moved and destroyed.
 
 &Self: Borrow the other ticket (read-only). If we took other: Self (without &), the other ticket would be moved and destroyed.
 
-What happens if we take ownership?
-rust
+###What happens if we take ownership?
+---
+
+```rust
 // BAD: Takes ownership of 'other'
 fn eq(&self, other: Ticket) -> bool {
     // ...
@@ -176,13 +181,15 @@ let ticket2 = Ticket { ... };
 let result = ticket1.eq(&ticket2); // Pass a reference!
 println!("{:?}", ticket2); // ✅ Works perfectly!
 
+---
 ## 7. Deep Dive: Why && (Logical AND)?
 && is the short-circuiting logical AND operator. It combines multiple boolean conditions.
 
 Without &&:
 You would have to write ugly, nested if statements:
+---
 
-rust
+```rust
 fn eq(&self, other: &Self) -> bool {
     if self.title == other.title {
         if self.description == other.description {
@@ -196,18 +203,21 @@ fn eq(&self, other: &Self) -> bool {
 With &&:
 It reads like plain English and is much cleaner:
 
-rust
+```rust
 self.title == other.title
     && self.description == other.description
     && self.status == other.status
 👉 "Return true if the titles match AND the descriptions match AND the statuses match."
 
+---
 ## Short-Circuiting Behavior
 && evaluates from left to right. If the first condition is false, it does not even check the rest because the whole expression can never be true.
+---
 
-rust
+```rust
 self.title == other.title  // If this is false, Rust STOPS here!
     && self.description == other.description // Skipped if title didn't match
     && self.status == other.status // Skipped if title didn't match
-This makes your code faster and safer.
+
+
 
