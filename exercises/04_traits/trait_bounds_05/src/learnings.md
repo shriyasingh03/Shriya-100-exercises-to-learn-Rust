@@ -64,3 +64,4 @@ fn clone_and_print<T: Debug + Clone>(value: T) {
     let copy = value.clone();
     println!("Original: {:?}, Copy: {:?}", value, copy);
 }
+```
